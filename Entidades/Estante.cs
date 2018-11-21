@@ -11,12 +11,14 @@ namespace Entidades
         public int altura { get; set; }
         public int fila { get; set; }
         public int idEstanteria { get; set; }
+        public List<Producto> listaProductos { get; set; }
 
-        public Estante(int altura, int fila, int idEstanteria)
+        public Estante(int altura, int fila, int idEstanteria, List<Producto> listaProductos)
         {
             this.altura = altura;
             this.fila = fila;
             this.idEstanteria = idEstanteria;
+            this.listaProductos = listaProductos;
         }
 
         public Estante()

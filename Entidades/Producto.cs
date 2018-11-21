@@ -19,6 +19,7 @@ namespace Entidades
         public int Marca_idmarca { get; set; }
         public double PesoNeto { get; set; }
         public double PesoBruto { get; set; }
+        //public List<Estante> ListaEstantes { get; set; }
 
         public Producto()
         {
