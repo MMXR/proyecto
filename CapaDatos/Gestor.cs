@@ -42,7 +42,7 @@ namespace CapaDatos
         //Delete
         public void deleteProduct(Producto p)
         {
-
+            p.PesoNeto = 0;
         }
 
     }
