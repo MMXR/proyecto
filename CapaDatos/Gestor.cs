@@ -11,36 +11,37 @@ namespace CapaDatos
     {
 
         //CRUD Producto
-        public void createProduct(Producto p)
+        public void CreateProduct(Producto p)
         {
 
         }
 
         //Read-->Opciones varias
-        public List<Producto> selectProductNombre(String name)
+        public List<Producto> SelectProductNombre(String name)
         {
+
             List<Producto> productos = new List<Producto>();
             return productos;
         }
 
-        public void selectProductCode(String code)
+        public void SelectProductCode(String code)
         {
 
         }
 
-        public void selectAllProducts()
+        public void SelectAllProducts()
         {
 
         }
 
         //Update
-        public void updateProduct(Producto p)
+        public void UpdateProduct(Producto p)
         {
 
         }
 
         //Delete
-        public void deleteProduct(Producto p)
+        public void DeleteProduct(Producto p)
         {
             p.PesoNeto = 0;
         }
