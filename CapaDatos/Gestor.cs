@@ -11,7 +11,7 @@ namespace CapaDatos
     {
 
         //CRUD Producto
-        public void createProduct(Producto p)
+        public void createProduct()
         {
 
         }
@@ -21,6 +21,7 @@ namespace CapaDatos
         {
             List<Producto> productos = new List<Producto>();
             return productos;
+
         }
 
         public void selectProductCode(String code)
