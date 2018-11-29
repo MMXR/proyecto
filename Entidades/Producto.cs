@@ -9,9 +9,7 @@ namespace Entidades
     public class Producto : IEquatable<Producto>
     {
         public string Codigo { get; set; }
-        public string Ean { get; set; }
         public string Descripcion { get; set; }
-        public string Marca { get; set; }
         public string Precio { get; set; }
         public int Stock { get; set; }
         public int Subfamilia_codSF { get; set; }
@@ -19,18 +17,16 @@ namespace Entidades
         public int Marca_idmarca { get; set; }
         public double PesoNeto { get; set; }
         public double PesoBruto { get; set; }
-        //public List<Estante> ListaEstantes { get; set; }
+        public List<Estante> ListaEstantes { get; set; }
 
         public Producto()
         {
         }
 
-        public Producto(string codigo, string ean, string descripcion, string marca, string precio, int stock, int subfamilia_codSF, int familia_codFamilia, int marca_idmarca, double pesoNeto, double pesoBruto)
+        public Producto(string codigo, string descripcion, string precio, int stock, int subfamilia_codSF, int familia_codFamilia, int marca_idmarca, double pesoNeto, double pesoBruto)
         {
             Codigo = codigo;
-            Ean = ean;
             Descripcion = descripcion;
-            Marca = marca;
             Precio = precio;
             Stock = stock;
             Subfamilia_codSF = subfamilia_codSF;
