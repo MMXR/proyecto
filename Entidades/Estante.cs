@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-    class Estante : IEquatable<Estante>
+    public class Estante : IEquatable<Estante>
     {
         public int altura { get; set; }
         public int fila { get; set; }
