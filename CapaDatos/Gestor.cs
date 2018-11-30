@@ -81,15 +81,19 @@ namespace CapaDatos
                     while (reader.HasRows)
                     {
 
-                        p.CodigoProducto = reader.GetInt32(0);
-                        p.Descripcion = reader.ToString(1);
-                        p.Precio = reader.ToString(2);
-                        p.Stock = reader.ToString(3);
-                        p.Subfamilia_codSF = reader.ToString(4);
-                        p.Familia_codFamilia = reader.ToString(5);
-                        p.Marca_idmarca = reader.ToString(6);
-                        p.PesoBruto = reader.ToString(7);
-                        p.PesoNeto = reader.ToString(8);
+                        p.CodigoProducto = reader.GetString(0);
+                        p.Descripcion = reader.GetString(1);
+                        p.Precio = reader.GetString(2);
+                        Int32.TryParse(reader.GetString(3), out int stock);
+                        p.Stock = stock;
+                        Int32.TryParse(reader.GetString(4), out int codSF);
+                        p.Subfamilia_codSF = codSF;
+                        Int32.TryParse(reader.GetString(5), out int Codf);
+                        p.Familia_codFamilia = Codf;
+                        Int32.TryParse(reader.GetString(6), out int idmarca);
+                        p.Marca_idmarca = idmarca;
+                        p.PesoBruto = reader.GetString(7);
+                        p.PesoNeto = reader.GetString(8);
                         productos.Add(p);
 
                     }
@@ -120,7 +124,7 @@ namespace CapaDatos
                         if (reader.HasRows == true)
                         {
                             int a = 0;
-                            while (reader.HasRows())
+                            while (reader.Read())
                             {
 
                                 Estante e = new Estante();
