@@ -22,7 +22,7 @@ namespace CapaDatos
                 connection.Open();
 
                 MySqlCommand mycomand = new MySqlCommand("select * from producto where codigo=@codigo", connection);
-                mycomand.Parameters.AddWithValue("@nombre", producto.Codigo);
+                mycomand.Parameters.AddWithValue("@nombre", producto.CodigoProducto);
                 MySqlDataReader reader = mycomand.ExecuteReader();
                 if (reader.HasRows == true)
                 {
@@ -31,7 +31,7 @@ namespace CapaDatos
                 reader.Close();
 
                 cmd.CommandText = "INSERT INTO producto (codigo,descripcion,precio,stock,subfamilia_codSF,subfamilia_familia_codFamilia,marca_idmarca,pesoNeto,pesoBruto) value (@codigo, @descripcion, @precio, @stock, @codFamilia, @codSubFamilia, @marca, @pesoNeto, @pesoBruto)";
-                cmd.Parameters.AddWithValue("@codigo", producto.Codigo);
+                cmd.Parameters.AddWithValue("@codigo", producto.CodigoProducto);
                 cmd.Parameters.AddWithValue("@descripcion", producto.Descripcion);
                 cmd.Parameters.AddWithValue("@codFamilia", producto.Familia_codFamilia);
                 cmd.Parameters.AddWithValue("@codSubFamilia", producto.Subfamilia_codSF);
