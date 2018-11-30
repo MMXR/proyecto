@@ -2,10 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Entidades;
-using MySql.Data.MySqlClient;
+
 namespace CapaDatos
 {
     public class Gestor
@@ -25,7 +22,7 @@ namespace CapaDatos
                 connection.Open();
 
                 MySqlCommand mycomand = new MySqlCommand("select * from producto where codigo=@codigo", connection);
-                mycomand.Parameters.AddWithValue("@nombre", producto.Codigo);
+                mycomand.Parameters.AddWithValue("@nombre", producto.CodigoCompleto);
                 MySqlDataReader reader = mycomand.ExecuteReader();
                 if (reader.HasRows == true)
                 {
@@ -34,7 +31,7 @@ namespace CapaDatos
                 reader.Close();
 
                 cmd.CommandText = "INSERT INTO producto (codigo,descripcion,precio,stock,subfamilia_codSF,subfamilia_familia_codFamilia,marca_idmarca,pesoNeto,pesoBruto) value (@codigo, @descripcion, @precio, @stock, @codFamilia, @codSubFamilia, @marca, @pesoNeto, @pesoBruto)";
-                cmd.Parameters.AddWithValue("@codigo", producto.CodigoProducto);
+                cmd.Parameters.AddWithValue("@codigo", producto.CodigoCompleto);
                 cmd.Parameters.AddWithValue("@descripcion", producto.Descripcion);
                 cmd.Parameters.AddWithValue("@codFamilia", producto.Familia_codFamilia);
                 cmd.Parameters.AddWithValue("@codSubFamilia", producto.Subfamilia_codSF);
@@ -110,7 +107,7 @@ namespace CapaDatos
                         Producto p = lista.ElementAt(i);
 
                         MySqlCommand mycomand = new MySqlCommand("select * from producto_has_estante where producto_codigo=@codigo", connection);
-                        mycomand.Parameters.AddWithValue("@codigo", p.CodigoProducto);
+                        mycomand.Parameters.AddWithValue("@codigo", p.CodigoCompleto);
                         MySqlDataReader reader = mycomand.ExecuteReader();
                         if (reader.HasRows == true)
                         {
@@ -150,12 +147,12 @@ namespace CapaDatos
 
 
                     MySqlCommand mycomand = new MySqlCommand("select * from producto where codigo=@codigo", connection);
-                    mycomand.Parameters.AddWithValue("@codigo", p.CodigoProducto);
+                    mycomand.Parameters.AddWithValue("@codigo", p.CodigoCompleto);
                     MySqlDataReader reader = mycomand.ExecuteReader();
                     if (reader.HasRows == true)
                     {
                         MySqlCommand mycomand = new MySqlCommand("UPDATE producto SET codigo=@codigo descripcion=@descripcion precio=@precio stock=@stock subfamilia_codSF=@subfamilia subfamilia_familia_codFamilia=@familia marca_idmarca=@marca pesoNeto@pesoneto pesoBruto=@pesoBruto WHERE codigo = @code ", connection);
-                        mycomand.Parameters.AddWithValue("@codigo", p.CodigoProducto);
+                        mycomand.Parameters.AddWithValue("@codigo", p.CodigoCompleto);
                         mycomand.Parameters.AddWithValue("@descripcion", p.Descripcion);
                         mycomand.Parameters.AddWithValue("@precio", p.Precio);
                         mycomand.Parameters.AddWithValue("@stock", p.Stock);
@@ -202,7 +199,7 @@ namespace CapaDatos
 
 
                     MySqlCommand mycomand = new MySqlCommand("select * from producto where codigo=@codigo", connection);
-                    mycomand.Parameters.AddWithValue("@codigo", p.CodigoProducto);
+                    mycomand.Parameters.AddWithValue("@codigo", p.CodigoCompleto);
                     MySqlDataReader reader = mycomand.ExecuteReader();
                     if (reader.HasRows == true)
                     {
