@@ -8,7 +8,8 @@ namespace Entidades
 {
     public class Producto : IEquatable<Producto>
     {
-        public string Codigo { get; set; }
+        public string CodigoProducto { get; set; }
+        public string CodigoCompleto { get; set; }
         public string Descripcion { get; set; }
         public string Precio { get; set; }
         public int Stock { get; set; }
@@ -23,9 +24,10 @@ namespace Entidades
         {
         }
 
-        public Producto(string codigo, string descripcion, string precio, int stock, int subfamilia_codSF, int familia_codFamilia, int marca_idmarca, double pesoNeto, double pesoBruto)
+        public Producto(string codigoproducto, string descripcion, string precio, int stock, int subfamilia_codSF, int familia_codFamilia, int marca_idmarca, double pesoNeto, double pesoBruto, List<Estante> listaEstantes)
         {
-            Codigo = codigo;
+            CodigoProducto = codigoproducto;
+            CodigoCompleto = "22"+"31012"+Familia_codFamilia+ Subfamilia_codSF+codigoproducto;
             Descripcion = descripcion;
             Precio = precio;
             Stock = stock;
@@ -34,6 +36,7 @@ namespace Entidades
             Marca_idmarca = marca_idmarca;
             PesoNeto = pesoNeto;
             PesoBruto = pesoBruto;
+            ListaEstantes = listaEstantes;
         }
 
         public override bool Equals(object obj)
@@ -44,7 +47,7 @@ namespace Entidades
         public bool Equals(Producto other)
         {
             return other != null &&
-                   Codigo == other.Codigo;
+                   CodigoProducto == other.CodigoProducto;
         }
 
         public override int GetHashCode()
