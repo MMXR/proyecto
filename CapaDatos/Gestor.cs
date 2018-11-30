@@ -14,6 +14,11 @@ namespace CapaDatos
         //CRUD Producto
         public String CreateProduct(Producto producto)
         {
+            if (!(Double.TryParse(producto.Precio, out double number)))
+            {
+                return "El precio debe ser un número";
+            }
+
             try
             {
                 //Conexion a la base de datos

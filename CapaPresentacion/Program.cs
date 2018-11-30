@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CapaDatos;
 
 namespace CapaPresentacion
 {
 	static class Program
 	{
-		/// <summary>
-		/// Punto de entrada principal para la aplicación.
-		/// </summary>
-		[STAThread]
+        public static Gestor gestor = new Gestor();
+        /// <summary>
+        /// Punto de entrada principal para la aplicación.
+        /// </summary>
+        [STAThread]
 		static void Main()
 		{
 			Application.EnableVisualStyles();

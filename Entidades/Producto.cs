@@ -16,15 +16,15 @@ namespace Entidades
         public int Subfamilia_codSF { get; set; }
         public int Familia_codFamilia { get; set; }
         public int Marca_idmarca { get; set; }
-        public double PesoNeto { get; set; }
-        public double PesoBruto { get; set; }
+        public string PesoNeto { get; set; }
+        public string PesoBruto { get; set; }
         public List<Estante> ListaEstantes { get; set; }
 
         public Producto()
         {
         }
 
-        public Producto(string codigoproducto, string descripcion, string precio, int stock, int subfamilia_codSF, int familia_codFamilia, int marca_idmarca, double pesoNeto, double pesoBruto, List<Estante> listaEstantes)
+        public Producto(string codigoproducto, string descripcion, string precio, int stock, int subfamilia_codSF, int familia_codFamilia, int marca_idmarca, string pesoNeto, string pesoBruto, List<Estante> listaEstantes)
         {
             CodigoProducto = codigoproducto;
             CodigoCompleto = "22"+"31012"+Familia_codFamilia+ Subfamilia_codSF+codigoproducto;
@@ -38,6 +38,19 @@ namespace Entidades
             PesoBruto = pesoBruto;
             ListaEstantes = listaEstantes;
         }
+        public Producto(string codigoproducto, string descripcion, string precio, int stock, int subfamilia_codSF, int familia_codFamilia, int marca_idmarca, string pesoNeto, string pesoBruto)
+        {
+            CodigoProducto = codigoproducto;
+            CodigoCompleto = "22" + "31012" + Familia_codFamilia + Subfamilia_codSF + codigoproducto;
+            Descripcion = descripcion;
+            Precio = precio;
+            Stock = stock;
+            Subfamilia_codSF = subfamilia_codSF;
+            Familia_codFamilia = familia_codFamilia;
+            Marca_idmarca = marca_idmarca;
+            PesoNeto = pesoNeto;
+            PesoBruto = pesoBruto;
+        }
 
         public override bool Equals(object obj)
         {
@@ -47,12 +60,18 @@ namespace Entidades
         public bool Equals(Producto other)
         {
             return other != null &&
-                   CodigoProducto == other.CodigoProducto;
+                   CodigoProducto == other.CodigoProducto &&
+                   Subfamilia_codSF == other.Subfamilia_codSF &&
+                   Familia_codFamilia == other.Familia_codFamilia;
         }
 
         public override int GetHashCode()
         {
-            return 1745598366 + EqualityComparer<string>.Default.GetHashCode(Codigo);
+            var hashCode = 855614290;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(CodigoProducto);
+            hashCode = hashCode * -1521134295 + Subfamilia_codSF.GetHashCode();
+            hashCode = hashCode * -1521134295 + Familia_codFamilia.GetHashCode();
+            return hashCode;
         }
     }
 }
