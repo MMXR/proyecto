@@ -12,7 +12,10 @@ namespace CapaDatos
     {
         static String STRINGCONECT = "SERVER=localhost;DATABASE=agenda;UID=root;PASSWORD=" + "" + ";";
         //CRUD Producto
+        //<<<<<<< HEAD
+        public void createProduct() { }
         public String CreateProduct(Producto producto)
+// e2eac3eaeac66331b85a2737449565a46c324f64
         {
             try
             {
@@ -50,30 +53,84 @@ namespace CapaDatos
                     return e.ToString();
                 
             }
-        //CRUD Producto
-        public void createProduct()
-        {
 
         }
 
         //Read-->Opciones varias
-        public List<Producto> SelectProductNombre(String name)
+        public List<Producto> SelectCamposProductoFromProducto(int cod)
         {
-
+            Producto p = new Producto();
             List<Producto> productos = new List<Producto>();
-            return productos;
+
+            using (MySqlConnection connection = new MySqlConnection())
+            {
+                connection.ConnectionString = STRINGCONECT;//CADENA CREADA
+                                                       ////PRIMERO SE BUSCA SI EL CONTACTO YA EXISTE-->Escribir la query, abrir conexion, ejecutar comando
+                connection.Open(); // abrir conexión
+
+                MySqlCommand mycomand = new MySqlCommand("select * from producto where codigo=@codigo", connection);
+                mycomand.Parameters.AddWithValue("@codigo", cod);
+                MySqlDataReader reader = mycomand.ExecuteReader();
+                if (reader.HasRows == true)
+                {
+                    while (reader.HasRows)
+                    {
+                        
+                        p.Codigo = reader.GetInt32(0);
+                        p.Descripcion = reader.ToString(1);
+                        p.Precio = reader.ToString(2);
+                        p.Stock = reader.ToString(3);
+                        p.Subfamilia_codSF = reader.ToString(4);
+                        p.Familia_codFamilia = reader.ToString(5);
+                        p.Marca_idmarca = reader.ToString(6);
+                        p.PesoBruto = reader.ToString(7);
+                        p.PesoNeto = reader.ToString(8);
+                        productos.Add(p);
+
+                    }
+
+                    List<Producto> productosConEstante = this.SelectProductFromEstante(productos);
+                }
+            }
+           
 
         }
 
-        public void SelectProductCode(String code)
+        public List<Producto> SelectProductFromEstante(List<Producto> lista)
         {
+           
+            for (int i = 0; i < lista.Count(); i++)
+            {
+                using (MySqlConnection connection = new MySqlConnection())
+                {
+                    connection.ConnectionString = STRINGCONECT;//CADENA CREADA
+                                                               ////PRIMERO SE BUSCA SI EL CONTACTO YA EXISTE-->Escribir la query, abrir conexion, ejecutar comando
+                    connection.Open(); // abrir conexión
+                    Producto p = lista.ElementAt(i);
 
+                    MySqlCommand mycomand = new MySqlCommand("select * from producto_has_estante where producto_codigo=@codigo", connection);
+                    mycomand.Parameters.AddWithValue("@codigo", p.Codigo);
+                    MySqlDataReader reader = mycomand.ExecuteReader();
+                    if (reader.HasRows == true)
+                    {
+                        int a = 0;
+                        while (reader.HasRows())
+                        {
+                            
+                            Estante e = new Estante();
+                            e.altura = reader.GetInt32(1);
+                            e.fila = reader.GetInt32(2);
+                            e.idEstanteria = reader.GetInt32(3);
+                            lista.ElementAt(a).ListaEstantes.Add(e);
+                            a++;
+                        }
+                    }
+                }
+            }
+            return lista;
         }
 
-        public void SelectAllProducts()
-        {
-
-        }
+       
 
         //Update
         public void UpdateProduct(Producto p)
