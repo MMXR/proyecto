@@ -73,6 +73,12 @@
     <Compile Include="frmBorrarUnProducto.Designer.cs">
       <DependentUpon>frmBorrarUnProducto.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmCambiarContraseña.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCambiarContraseña.Designer.cs">
+      <DependentUpon>frmCambiarContraseña.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCrearProducto.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmBorrarUnProducto.resx">
       <DependentUpon>frmBorrarUnProducto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCambiarContraseña.resx">
+      <DependentUpon>frmCambiarContraseña.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCrearProducto.resx">
       <DependentUpon>frmCrearProducto.cs</DependentUpon>
