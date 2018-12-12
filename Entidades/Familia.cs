@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-    class Familia : IEquatable<Familia>
+    public class Familia : IEquatable<Familia>
     {
         public int codFamilia { get; set; }
         public String idString { get; set; }
         public String descripcion { get; set; }
         public List<SubFamilia> listaSubFamilias { get; set; }
 
-        public Familia(int codFamilia, string idString, string descripcion, List<SubFamilia> listaSubFamilias)
+        public Familia(int codFamilia, string idString, string descripcion)
         {
             this.codFamilia = codFamilia;
             this.idString = idString;
             this.descripcion = descripcion;
-            this.listaSubFamilias = listaSubFamilias;
         }
 
         public Familia()

@@ -13,7 +13,6 @@ namespace CapaDatos
         static String STRINGCONECT = "SERVER=localhost;DATABASE=agenda;UID=root;PASSWORD=" + "" + ";";
         //CRUD Producto
         //<<<<<<< HEAD
-        public void createProduct() { }
         public String CreateProduct(Producto producto)
         // e2eac3eaeac66331b85a2737449565a46c324f64
         {
