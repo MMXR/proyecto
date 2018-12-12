@@ -301,6 +301,7 @@
             this.cboFamilia.Name = "cboFamilia";
             this.cboFamilia.Size = new System.Drawing.Size(132, 24);
             this.cboFamilia.TabIndex = 23;
+            this.cboFamilia.SelectedIndexChanged += new System.EventHandler(this.cboFamilia_SelectedIndexChanged);
             // 
             // cboMarca
             // 

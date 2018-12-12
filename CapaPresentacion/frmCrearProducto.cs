@@ -81,13 +81,6 @@ namespace CapaPresentacion {
             cboFamilia.Items.Clear();
             cboFamilia.Items.AddRange(familias.ToArray());
 
-            List<SubFamilia> subfamilias = new List<SubFamilia>();
-            subfamilias = Program.gestor.BuscarSubFamilias();
-
-            cboSubFamilia.DisplayMember = "idCaracter";
-            cboSubFamilia.ValueMember = "codSF";
-            cboSubFamilia.Items.Clear();
-            cboSubFamilia.Items.AddRange(subfamilias.ToArray());
 
         }
 
@@ -118,6 +111,20 @@ namespace CapaPresentacion {
         private void grpCreacion_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void cboFamilia_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Familia FElegido = (Familia)cboFamilia.SelectedItem;
+            List<SubFamilia> subfamilias = new List<SubFamilia>();
+            subfamilias = Program.gestor.BuscarSubFamilias(FElegido.codFamilia);
+
+       
+
+            cboSubFamilia.DisplayMember = "idCaracter";
+            cboSubFamilia.ValueMember = "codSF";
+            cboSubFamilia.Items.Clear();
+            cboSubFamilia.Items.AddRange(subfamilias.ToArray());
         }
     }
 }
