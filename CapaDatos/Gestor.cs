@@ -8,7 +8,7 @@ namespace CapaDatos
 {
     public class Gestor
     {
-        static String STRINGCONECT = "SERVER=localhost;DATABASE=agenda;UID=root;PASSWORD=" + "" + ";";
+        static String STRINGCONECT = "SERVER=localhost;DATABASE=almacenxmmr;UID=root;PASSWORD=" + "" + ";";
         //CRUD Producto
         //<<<<<<< HEAD
         public String CreateProduct(Producto producto)
@@ -27,7 +27,7 @@ namespace CapaDatos
                 connection.Open();
 
                 MySqlCommand mycomand = new MySqlCommand("select * from producto where codigo=@codigo", connection);
-                mycomand.Parameters.AddWithValue("@nombre", producto.CodigoProducto);
+                mycomand.Parameters.AddWithValue("@codigo", producto.CodigoProducto);
                 MySqlDataReader reader = mycomand.ExecuteReader();
                 if (reader.HasRows == true)
                 {
@@ -245,10 +245,11 @@ namespace CapaDatos
             List<Marca> marcas = new List<Marca>();
             try
             {
-                using (MySqlConnection connection = new MySqlConnection())
-                {
-                    connection.ConnectionString = STRINGCONECT;
-                    connection.Open();
+                //Conexion a la base de datos
+                MySqlConnection connection = new MySqlConnection(STRINGCONECT);
+                MySqlCommand cmd = connection.CreateCommand();
+                connection.Open();
+
                     MySqlCommand mycomand = new MySqlCommand("select * from marca ", connection);
                     MySqlDataReader reader = mycomand.ExecuteReader();
                     if (reader.HasRows)
@@ -262,15 +263,16 @@ namespace CapaDatos
                             //var kk = (DateTime)reader["fecha"];
                             //var kdfjakd = (int)reader.GetInt32(0);        
                         }
-                        return null;
-                    }
+                    reader.Close();
+                    connection.Close();
+                    return marcas;
                 }
-            }    
+                }   
             catch (Exception e)
             {
                 return null;
             }
-            return marcas;
+            return null;
         }
 
 
@@ -290,7 +292,7 @@ namespace CapaDatos
                         while (reader.Read())
                         {
                             string name = reader["idString"].ToString();
-                            string description = reader["description"].ToString();
+                            string description = reader["descripcion"].ToString();
                             int id = reader.GetInt32(0);
                             Familia familia = new Familia(id, name, description);
                             familias.Add(familia);
@@ -325,7 +327,7 @@ namespace CapaDatos
                         while (reader.Read())
                         {
                             string name = reader["idCaracter"].ToString();
-                            string description = reader["description"].ToString();
+                            string description = reader["descripcion"].ToString();
                             int id = reader.GetInt32(0);
                             int idFamilia = reader.GetInt32(3);
                             SubFamilia subfamilia = new SubFamilia(id, name, description, idFamilia);
