@@ -18,6 +18,7 @@ namespace Entidades
             this.codFamilia = codFamilia;
             this.idString = idString;
             this.descripcion = descripcion;
+          
         }
 
         public Familia()

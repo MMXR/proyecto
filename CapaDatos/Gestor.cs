@@ -1,11 +1,9 @@
 ﻿using Entidades;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Entidades;
-using MySql.Data.MySqlClient;
+
 namespace CapaDatos
 {
     public class Gestor
@@ -38,7 +36,7 @@ namespace CapaDatos
                 reader.Close();
 
                 cmd.CommandText = "INSERT INTO producto (codigo,descripcion,precio,stock,subfamilia_codSF,subfamilia_familia_codFamilia,marca_idmarca,pesoNeto,pesoBruto) value (@codigo, @descripcion, @precio, @stock, @codFamilia, @codSubFamilia, @marca, @pesoNeto, @pesoBruto)";
-                cmd.Parameters.AddWithValue("@codigo", producto.CodigoProducto);
+                cmd.Parameters.AddWithValue("@codigo", producto.CodigoCompleto);
                 cmd.Parameters.AddWithValue("@descripcion", producto.Descripcion);
                 cmd.Parameters.AddWithValue("@codFamilia", producto.Familia_codFamilia);
                 cmd.Parameters.AddWithValue("@codSubFamilia", producto.Subfamilia_codSF);
@@ -118,7 +116,7 @@ namespace CapaDatos
                         Producto p = lista.ElementAt(i);
 
                         MySqlCommand mycomand = new MySqlCommand("select * from producto_has_estante where producto_codigo=@codigo", connection);
-                        mycomand.Parameters.AddWithValue("@codigo", p.CodigoProducto);
+                        mycomand.Parameters.AddWithValue("@codigo", p.CodigoCompleto);
                         MySqlDataReader reader = mycomand.ExecuteReader();
                         if (reader.HasRows == true)
                         {
@@ -158,30 +156,21 @@ namespace CapaDatos
 
 
                     MySqlCommand mycomand = new MySqlCommand("select * from producto where codigo=@codigo", connection);
-                    mycomand.Parameters.AddWithValue("@codigo", p.CodigoProducto);
+                    mycomand.Parameters.AddWithValue("@codigo", p.CodigoCompleto);
                     MySqlDataReader reader = mycomand.ExecuteReader();
                     if (reader.HasRows == true)
                     {
-                        MySqlCommand mycomando = new MySqlCommand("UPDATE producto SET codigo=@codigo descripcion=@descripcion precio=@precio stock=@stock subfamilia_codSF=@subfamilia subfamilia_familia_codFamilia=@familia marca_idmarca=@marca pesoNeto@pesoneto pesoBruto=@pesoBruto WHERE codigo = @code ", connection);
-                        mycomando.Parameters.AddWithValue("@codigo", p.CodigoProducto);
-                        mycomando.Parameters.AddWithValue("@descripcion", p.Descripcion);
-                        mycomando.Parameters.AddWithValue("@precio", p.Precio);
-                        mycomando.Parameters.AddWithValue("@stock", p.Stock);
-                        mycomando.Parameters.AddWithValue("@subfamilia_codSF", p.Subfamilia_codSF);
-                        mycomando.Parameters.AddWithValue("@subfamilia_familia_codFamilia", p.Familia_codFamilia);
-                        mycomando.Parameters.AddWithValue("@marca_idmarca", p.Marca_idmarca);
-                        mycomando.Parameters.AddWithValue("@pesoNeto", p.PesoNeto);
-                        mycomando.Parameters.AddWithValue("@pesoBruto", p.PesoBruto);
-                        mycomando.Parameters.AddWithValue("@code", p.CodigoProducto);
-                        mycomando.ExecuteNonQuery();
-                        return "updated";
-
-                        //MySqlDataReader reader2 = mycomand2.ExecuteReader();
-                        //if (reader2.HasRows())
-                        //{
-                        //    return "Updateado";
-                        //}
-
+                        MySqlCommand mycomand = new MySqlCommand("UPDATE producto SET codigo=@codigo descripcion=@descripcion precio=@precio stock=@stock subfamilia_codSF=@subfamilia subfamilia_familia_codFamilia=@familia marca_idmarca=@marca pesoNeto@pesoneto pesoBruto=@pesoBruto WHERE codigo = @code ", connection);
+                        mycomand.Parameters.AddWithValue("@codigo", p.CodigoProducto);
+                        mycomand.Parameters.AddWithValue("@descripcion", p.Descripcion);
+                        mycomand.Parameters.AddWithValue("@precio", p.Precio);
+                        mycomand.Parameters.AddWithValue("@stock", p.Stock);
+                        mycomand.Parameters.AddWithValue("@subfamilia_codSF", p.Subfamilia_codSF);
+                        mycomand.Parameters.AddWithValue("@subfamilia_familia_codFamilia", p.Familia_codFamilia);
+                        mycomand.Parameters.AddWithValue("@marca_idmarca", p.Marca_idmarca);
+                        mycomand.Parameters.AddWithValue("@pesoNeto", p.PesoNeto);
+                        mycomand.Parameters.AddWithValue("@pesoBruto", p.PesoBruto);
+                        mycomand.Parameters.AddWithValue("@code", p.CodigoProducto);
 
                     }
                     return "No se ha encontrado el producto.";
@@ -212,7 +201,7 @@ namespace CapaDatos
 
 
                     MySqlCommand mycomand = new MySqlCommand("select * from producto where codigo=@codigo", connection);
-                    mycomand.Parameters.AddWithValue("@codigo", p.CodigoProducto);
+                    mycomand.Parameters.AddWithValue("@codigo", p.CodigoCompleto);
                     MySqlDataReader reader = mycomand.ExecuteReader();
                     if (reader.HasRows == true)
                     {
@@ -247,5 +236,113 @@ namespace CapaDatos
             return "borrado";
 
     }
+
+
+
+
+        public List<Marca> BuscarMarcas()
+        {
+            List<Marca> marcas = new List<Marca>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection())
+                {
+                    connection.ConnectionString = STRINGCONECT;
+                    connection.Open();
+                    MySqlCommand mycomand = new MySqlCommand("select * from marca ", connection);
+                    MySqlDataReader reader = mycomand.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string name = reader["nombre"].ToString();
+                            int id = reader.GetInt32(0);
+                            Marca marca = new Marca(id, name);
+                            marcas.Add(marca);
+                            //var kk = (DateTime)reader["fecha"];
+                            //var kdfjakd = (int)reader.GetInt32(0);        
+                        }
+                        return null;
+                    }
+                }
+            }    
+            catch (Exception e)
+            {
+                return null;
+            }
+            return marcas;
+        }
+
+
+        public List<Familia> BuscarFamilias()
+        {
+            List<Familia> familias = new List<Familia>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection())
+                {
+                    connection.ConnectionString = STRINGCONECT;
+                    connection.Open();
+                    MySqlCommand mycomand = new MySqlCommand("select * from familia ", connection);
+                    MySqlDataReader reader = mycomand.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string name = reader["idString"].ToString();
+                            string description = reader["description"].ToString();
+                            int id = reader.GetInt32(0);
+                            Familia familia = new Familia(id, name, description);
+                            familias.Add(familia);
+                            //var kk = (DateTime)reader["fecha"];
+                            //var kdfjakd = (int)reader.GetInt32(0);        
+                        }
+                        return familias;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            return null;
+        }
+
+
+        public List<SubFamilia> BuscarSubFamilias()
+        {
+            List<SubFamilia> subfamilias = new List<SubFamilia>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection())
+                {
+                    connection.ConnectionString = STRINGCONECT;
+                    connection.Open();
+                    MySqlCommand mycomand = new MySqlCommand("select * from subfamilia ", connection);
+                    MySqlDataReader reader = mycomand.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string name = reader["idCaracter"].ToString();
+                            string description = reader["description"].ToString();
+                            int id = reader.GetInt32(0);
+                            int idFamilia = reader.GetInt32(3);
+                            SubFamilia subfamilia = new SubFamilia(id, name, description, idFamilia);
+                            subfamilias.Add(subfamilia);
+                            //var kk = (DateTime)reader["fecha"];
+                            //var kdfjakd = (int)reader.GetInt32(0);        
+                        }
+                        return subfamilias;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            return null;
+        }
+
     }
 }
