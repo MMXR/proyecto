@@ -53,7 +53,8 @@ namespace CapaDatos
                 connection.Close();
                 return "Datos insertados con éxito";
 
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return e.ToString();
 
@@ -166,7 +167,8 @@ namespace CapaDatos
 
             for (int i = 0; i < lista.Count(); i++)
             {
-                try {
+                try
+                {
                     using (MySqlConnection connection = new MySqlConnection())
                     {
                         connection.ConnectionString = STRINGCONECT;//CADENA CREADA
@@ -209,7 +211,8 @@ namespace CapaDatos
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection()) {
+                using (MySqlConnection connection = new MySqlConnection())
+                {
                     connection.ConnectionString = STRINGCONECT;
                     connection.Open();
 
@@ -242,7 +245,7 @@ namespace CapaDatos
 
                     }
                     return "No se ha encontrado el producto.";
-            }
+                }
 
 
             }
@@ -301,7 +304,7 @@ namespace CapaDatos
                             j = j + 1;
                             if (j == i)
                             {
-                                nombreEmpresa = (String)reader["nombre"];    
+                                nombreEmpresa = (String)reader["nombre"];
                             }
                         }
 
@@ -346,23 +349,23 @@ namespace CapaDatos
         public int SelectCountCantidadMarcas()
         {
             int cantidad = 0;
-                try
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection())
                 {
-                    using (MySqlConnection connection = new MySqlConnection())
-                    {
-                        connection.ConnectionString = STRINGCONECT;//CADENA CREADA
-                                                                   ////PRIMERO SE BUSCA SI EL CONTACTO YA EXISTE-->Escribir la query, abrir conexion, ejecutar comando
-                        MySqlCommand mycomand = new MySqlCommand();
-                        mycomand.Connection = connection;
-                        connection.Open(); // abrir conexión
-                        mycomand.CommandText = "select COUNT(*) from marca";
-                        cantidad = Convert.ToInt32(mycomand.ExecuteScalar());
-                    }
+                    connection.ConnectionString = STRINGCONECT;//CADENA CREADA
+                                                               ////PRIMERO SE BUSCA SI EL CONTACTO YA EXISTE-->Escribir la query, abrir conexion, ejecutar comando
+                    MySqlCommand mycomand = new MySqlCommand();
+                    mycomand.Connection = connection;
+                    connection.Open(); // abrir conexión
+                    mycomand.CommandText = "select COUNT(*) from marca";
+                    cantidad = Convert.ToInt32(mycomand.ExecuteScalar());
                 }
-                catch (Exception e)
-                {
-                    return 0;
-                }
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
             return cantidad;
         }
     }
