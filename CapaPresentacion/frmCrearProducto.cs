@@ -66,21 +66,21 @@ namespace CapaPresentacion {
             cboMarca.Items.Clear();
             cboMarca.Items.AddRange(marcas.ToArray());
 
-            List<Marca> marcas = new List<Marca>();
-            marcas = Program.gestor.BuscarMarcas();
+            List<Familia> familias = new List<Familia>();
+            familias = Program.gestor.BuscarFamilias();
 
-            cboMarca.DisplayMember = "nombre";
-            cboMarca.ValueMember = "idmarca";
-            cboMarca.Items.Clear();
-            cboMarca.Items.AddRange(marcas.ToArray());
+            cboFamilia.DisplayMember = "idString";
+            cboFamilia.ValueMember = "codFamilia";
+            cboFamilia.Items.Clear();
+            cboFamilia.Items.AddRange(familias.ToArray());
 
-            List<Marca> marcas = new List<Marca>();
-            marcas = Program.gestor.BuscarMarcas();
+            List<SubFamilia> subfamilias = new List<SubFamilia>();
+            subfamilias = Program.gestor.BuscarSubFamilias();
 
-            cboMarca.DisplayMember = "nombre";
-            cboMarca.ValueMember = "idmarca";
-            cboMarca.Items.Clear();
-            cboMarca.Items.AddRange(marcas.ToArray());
+            cboSubFamilia.DisplayMember = "idCaracter";
+            cboSubFamilia.ValueMember = "codSF";
+            cboSubFamilia.Items.Clear();
+            cboSubFamilia.Items.AddRange(subfamilias.ToArray());
 
         }
 
