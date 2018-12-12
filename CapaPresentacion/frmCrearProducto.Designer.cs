@@ -49,9 +49,9 @@
             this.btnMinimizar = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.grpCreacion = new System.Windows.Forms.GroupBox();
-            this.cboMarca = new System.Windows.Forms.ComboBox();
-            this.cboFamilia = new System.Windows.Forms.ComboBox();
             this.cboSubFamilia = new System.Windows.Forms.ComboBox();
+            this.cboFamilia = new System.Windows.Forms.ComboBox();
+            this.cboMarca = new System.Windows.Forms.ComboBox();
             this.grpCreacion.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -284,29 +284,32 @@
             this.grpCreacion.Text = "Crear un Producto Nuevo";
             this.grpCreacion.Enter += new System.EventHandler(this.grpCreacion_Enter);
             // 
-            // cboMarca
+            // cboSubFamilia
             // 
-            this.cboMarca.FormattingEnabled = true;
-            this.cboMarca.Location = new System.Drawing.Point(464, 98);
-            this.cboMarca.Name = "cboMarca";
-            this.cboMarca.Size = new System.Drawing.Size(132, 24);
-            this.cboMarca.TabIndex = 22;
+            this.cboSubFamilia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSubFamilia.FormattingEnabled = true;
+            this.cboSubFamilia.Location = new System.Drawing.Point(773, 21);
+            this.cboSubFamilia.Name = "cboSubFamilia";
+            this.cboSubFamilia.Size = new System.Drawing.Size(132, 24);
+            this.cboSubFamilia.TabIndex = 24;
             // 
             // cboFamilia
             // 
+            this.cboFamilia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboFamilia.FormattingEnabled = true;
             this.cboFamilia.Location = new System.Drawing.Point(464, 23);
             this.cboFamilia.Name = "cboFamilia";
             this.cboFamilia.Size = new System.Drawing.Size(132, 24);
             this.cboFamilia.TabIndex = 23;
             // 
-            // cboSubFamilia
+            // cboMarca
             // 
-            this.cboSubFamilia.FormattingEnabled = true;
-            this.cboSubFamilia.Location = new System.Drawing.Point(773, 21);
-            this.cboSubFamilia.Name = "cboSubFamilia";
-            this.cboSubFamilia.Size = new System.Drawing.Size(132, 24);
-            this.cboSubFamilia.TabIndex = 24;
+            this.cboMarca.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboMarca.FormattingEnabled = true;
+            this.cboMarca.Location = new System.Drawing.Point(464, 98);
+            this.cboMarca.Name = "cboMarca";
+            this.cboMarca.Size = new System.Drawing.Size(132, 24);
+            this.cboMarca.TabIndex = 22;
             // 
             // frmCrearProducto
             // 

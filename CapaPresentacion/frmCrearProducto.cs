@@ -18,7 +18,7 @@ namespace CapaPresentacion {
         }
 
         private void btnAceptar_Click(object sender, EventArgs e) {
-            if (txtCodigo.Text == "" || txtDescripcion.Text == "" || txtPrecio.Text == "" || txtStock.Text == "" || cboFamilia.SelectedText == "" || cboSubFamilia.SelectedText == "" || cboMarca.SelectedText == "" || txtPesoNeto.Text == "" || txtPesoBruto.Text == "") {
+            if (txtCodigo.Text == "" || txtDescripcion.Text == "" || txtPrecio.Text == "" || txtStock.Text == "" || cboFamilia.Text == "" || cboSubFamilia.Text == "" || cboMarca.Text == "" || txtPesoNeto.Text == "" || txtPesoBruto.Text == "") {
                 MessageBox.Show("¡Te has olvidado de escribir algún dato!", "Error");
             } else {
                 if (!(Int32.TryParse(txtStock.Text, out int stock)))
@@ -31,7 +31,14 @@ namespace CapaPresentacion {
                     }
                     else
                     {
-                        Program.gestor.CreateProduct(new Producto(txtCodigo.Text, txtDescripcion.Text, txtPrecio.Text, stock, codSF, codF, marca, txtPesoNeto.Text, txtPesoBruto.Text));
+                        Familia FElegido = (Familia)cboFamilia.SelectedItem;
+                        SubFamilia SFElegido = (SubFamilia)cboSubFamilia.SelectedItem;
+                        Marca marcaElegida = (Marca)cboMarca.SelectedItem;
+                        String respuesta = Program.gestor.CreateProduct(new Producto(txtCodigo.Text, txtDescripcion.Text, txtPrecio.Text, stock, SFElegido.codSF, FElegido.codFamilia, marcaElegida.idmarca, txtPesoNeto.Text, txtPesoBruto.Text));
+                        MessageBox.Show(respuesta);
+                        frmMenuOpciones menu = new frmMenuOpciones();
+                        menu.Show();
+
                     }
                 }
             }
