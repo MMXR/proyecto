@@ -10,7 +10,7 @@ namespace CapaDatos
 {
     public class Gestor
     {
-        static String STRINGCONECT = "SERVER=localhost;DATABASE=agenda;UID=root;PASSWORD=" + "" + ";";
+        static String STRINGCONECT = "SERVER=localhost;DATABASE=almacenmmxr;UID=root;PASSWORD=" + "" + ";";
         //CRUD Producto
         //<<<<<<< HEAD
         public void createProduct() { }
@@ -104,7 +104,63 @@ namespace CapaDatos
             return productos;
 
         }
+        public String SelectProductoMarca(int i, int marca)
+        {
+            String nombreProducto = "";
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection())
+                {
+                    connection.ConnectionString = STRINGCONECT;//CADENA CREADA
+                                                               ////PRIMERO SE BUSCA SI EL CONTACTO YA EXISTE-->Escribir la query, abrir conexion, ejecutar comando
+                    connection.Open(); // abrir conexión
+                    int j = 0;
+                    MySqlCommand mycomand = new MySqlCommand("select * from producto where marca_idmarca=@marca", connection);
+                    mycomand.Parameters.AddWithValue("@marca", marca);
+                    MySqlDataReader reader = mycomand.ExecuteReader();
+                    if (reader.HasRows == true)
+                    {
+                        while (reader.Read())
+                        {
+                            j = j + 1;
+                            if (j == i)
+                            {
+                                nombreProducto = (String)reader["descripcion"];
+                            }
+                        }
 
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
+            return nombreProducto;
+        }
+        public int SelectCountProductosMarca(int marca)
+        {
+            int cantidad = 0;
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection())
+                {
+                    connection.ConnectionString = STRINGCONECT;//CADENA CREADA
+                                                               ////PRIMERO SE BUSCA SI EL CONTACTO YA EXISTE-->Escribir la query, abrir conexion, ejecutar comando
+                    MySqlCommand mycomand = new MySqlCommand();
+                    mycomand.Connection = connection;
+                    connection.Open(); // abrir conexión
+                    mycomand.CommandText = "select COUNT(*) from producto where marca_idmarca=@marca";
+                    mycomand.Parameters.AddWithValue("@marca", marca);
+                    cantidad = Convert.ToInt32(mycomand.ExecuteScalar());
+                }
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+            return cantidad;
+        }
         public List<Producto> SelectProductFromEstante(List<Producto> lista)
         {
 
@@ -201,52 +257,113 @@ namespace CapaDatos
 
 
         //Delete
-        public string DeleteProduct(Producto p)
+        public string DeleteProduct(String p, int marca)
         {
 
             try
             {
+
                 using (MySqlConnection connection = new MySqlConnection())
                 {
                     connection.ConnectionString = STRINGCONECT;
                     connection.Open();
-
-
-                    MySqlCommand mycomand = new MySqlCommand("select * from producto where codigo=@codigo", connection);
-                    mycomand.Parameters.AddWithValue("@codigo", p.CodigoProducto);
-                    MySqlDataReader reader = mycomand.ExecuteReader();
-                    if (reader.HasRows == true)
-                    {
-
-                        connection.Close();
-
-                        try
-                        {
-                            using (MySqlConnection connection2 = new MySqlConnection())
-                            {
-                                connection2.ConnectionString = STRINGCONECT;
-                                connection2.Open();
-
-
-                                MySqlCommand mycomando = new MySqlCommand("delete from producto where codigo=@codigo", connection);
-                                mycomando.Parameters.AddWithValue("@codigo", p.CodigoProducto);
-                                MySqlDataReader reader2 = mycomando.ExecuteReader();
-                                return "deleted";
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            return e.Message;
-                        }
-                    }
+                    MySqlCommand mycomando = new MySqlCommand("delete from producto where descripcion=@des and marca_idmarca=@marca", connection);
+                    mycomando.Parameters.AddWithValue("@marca", marca);
+                    mycomando.Parameters.AddWithValue("@des", p);
+                    mycomando.ExecuteNonQuery();
                 }
             }
             catch (Exception e)
             {
                 return e.Message;
             }
-            return "borrado";
+            return "";
 
-    }
+        }
+        //CRUD EMPRESA
+        public String SelectNombreMarca(int i)
+        {
+            String nombreEmpresa = "";
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection())
+                {
+                    connection.ConnectionString = STRINGCONECT;//CADENA CREADA
+                                                               ////PRIMERO SE BUSCA SI EL CONTACTO YA EXISTE-->Escribir la query, abrir conexion, ejecutar comando
+                    connection.Open(); // abrir conexión
+                    int j = 0;
+                    MySqlCommand mycomand = new MySqlCommand("select * from marca", connection);
+                    MySqlDataReader reader = mycomand.ExecuteReader();
+                    if (reader.HasRows == true)
+                    {
+                        while (reader.Read())
+                        {
+                            j = j + 1;
+                            if (j == i)
+                            {
+                                nombreEmpresa = (String)reader["nombre"];    
+                            }
+                        }
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
+            return nombreEmpresa;
+        }
+        public int SelectIDMarca(String nombre)
+        {
+            int id = 0;
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection())
+                {
+                    connection.ConnectionString = STRINGCONECT;//CADENA CREADA
+                                                               ////PRIMERO SE BUSCA SI EL CONTACTO YA EXISTE-->Escribir la query, abrir conexion, ejecutar comando
+                    connection.Open(); // abrir conexión
+                    int j = 0;
+                    MySqlCommand mycomand = new MySqlCommand("select * from marca where nombre=@nombre", connection);
+                    mycomand.Parameters.AddWithValue("@nombre", nombre);
+                    MySqlDataReader reader = mycomand.ExecuteReader();
+                    if (reader.HasRows == true)
+                    {
+                        if (reader.Read())
+                        {
+                            id = (int)reader["idmarca"];
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+            return id;
+        }
+        public int SelectCountCantidadMarcas()
+        {
+            int cantidad = 0;
+                try
+                {
+                    using (MySqlConnection connection = new MySqlConnection())
+                    {
+                        connection.ConnectionString = STRINGCONECT;//CADENA CREADA
+                                                                   ////PRIMERO SE BUSCA SI EL CONTACTO YA EXISTE-->Escribir la query, abrir conexion, ejecutar comando
+                        MySqlCommand mycomand = new MySqlCommand();
+                        mycomand.Connection = connection;
+                        connection.Open(); // abrir conexión
+                        mycomand.CommandText = "select COUNT(*) from marca";
+                        cantidad = Convert.ToInt32(mycomand.ExecuteScalar());
+                    }
+                }
+                catch (Exception e)
+                {
+                    return 0;
+                }
+            return cantidad;
+        }
     }
 }

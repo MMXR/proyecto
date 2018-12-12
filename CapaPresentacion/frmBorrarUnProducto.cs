@@ -9,16 +9,22 @@ namespace CapaPresentacion {
 		}
 
 		private void btnAceptar_Click(object sender, EventArgs e) {
-			if (txtCodigo.Text == "" || txtEAN.Text == "" || txtDescripcion.Text == "" || txtMarca.Text == "" || txtPrecio.Text == "" || txtStock.Text == "" || txtCodSubfamilia.Text == "" || txtCodFamilia.Text == "" || txtIdMarca.Text == "" || txtPesoNeto.Text == "" || txtPesoBruto.Text == "") {
-				MessageBox.Show("¡Te has olvidado de escribir algún dato!", "Error");
-			} else {
-				int[] valoresInt = { int.Parse(txtStock.Text), int.Parse(txtCodSubfamilia.Text), int.Parse(txtCodFamilia.Text), int.Parse(txtIdMarca.Text), int.Parse(txtPesoNeto.Text), int.Parse(txtPesoBruto.Text) };	
-                DialogResult result = MessageBox.Show("De verdad, ¿Quieres borrar este producto?", "Borrar el producto Selecionado", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
+			if((cbxEmpresas.SelectedItem.ToString() != ""))
+            {
+                if((cbxProductos.SelectedItem.ToString() != ""))
                 {
-                    //Producto productoAux = new Producto(txtCodigo.Text, txtEAN.Text, txtDescripcion.Text, txtMarca.Text, txtPrecio.Text, valoresInt[0], valoresInt[1], valoresInt[2], valoresInt[3], valoresInt[4], valoresInt[5]);
-                    //Faltar llamar a la clase gestor de datos.
+                    int idMarca = Program.gestor.SelectIDMarca(cbxEmpresas.SelectedItem.ToString());
+                    Program.gestor.DeleteProduct(cbxProductos.SelectedItem.ToString(), idMarca);
                 }
+                else
+                {
+                    MessageBox.Show("Eliga un producto, para borrar el producto en cuestion");
+                }
+                
+            }
+            else
+            {
+                MessageBox.Show("Eliga una marca y un producto, para borrar el producto en cuestion");
             }
 		}
 
@@ -65,6 +71,50 @@ namespace CapaPresentacion {
             //btnAceptar
             btnAceptar.Left = ((this.Width - btnAceptar.Width) / 2) - 100;
             btnAceptar.Top = ((this.Height - btnAceptar.Height) / 2);
+            int cantidad = Program.gestor.SelectCountCantidadMarcas();
+            if (cantidad == 0)
+            {
+                MessageBox.Show("No hay ninguna marca registrada, no puedes borrar ningún producto porque no existen marcas.");
+                Close();
+            }
+            for (int i = 0; i < cantidad + 1; i++)
+            {
+                String nombreEmpresa = Program.gestor.SelectNombreMarca(i);
+                if (nombreEmpresa != "")
+                {
+                    cbxEmpresas.Items.Add(nombreEmpresa);
+                }
+            }
+        }
+
+        private void cbxEmpresas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cbxProductos.Text = "";
+            cbxProductos.Items.Clear();
+            int idMarca = Program.gestor.SelectIDMarca(cbxEmpresas.SelectedItem.ToString());
+            int cantidad = Program.gestor.SelectCountProductosMarca(idMarca);
+            if (cantidad == 0)
+            {
+                cbxProductos.Visible = false;
+                lblProducto.Visible = false;
+                MessageBox.Show("No hay ningun producto registrado en esta marca, eliga otro marca.");
+            }
+            else
+            {
+                for (int i = 0; i < cantidad + 1; i++)
+                {
+                    String producto = Program.gestor.SelectProductoMarca(i, idMarca);
+                    if (producto != "")
+                    {
+                        cbxProductos.Items.Add(producto);
+                    }
+                }
+                if (cbxProductos.Items.Count > 0)
+                {
+                    cbxProductos.Visible = true;
+                    lblProducto.Visible = true;
+                }
+            }
         }
     }
 }
