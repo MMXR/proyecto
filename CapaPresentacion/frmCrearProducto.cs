@@ -1,14 +1,15 @@
 ﻿using Entidades;
+using System.Collections.Generic;
 using System;
 using System.Windows.Forms;
 
 namespace CapaPresentacion {
-	public partial class frmCrearProducto : Form {
-		public frmCrearProducto() {
-			InitializeComponent();
-		}
+    public partial class frmCrearProducto : Form {
+        public frmCrearProducto() {
+            InitializeComponent();
+        }
 
-		private void btnSalir_Click(object sender, EventArgs e)	{
+        private void btnSalir_Click(object sender, EventArgs e) {
             DialogResult result = MessageBox.Show("De verdad, ¿Quieres salir del formulario de creación de Producto?", "Salir de la Creación del Producto", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
@@ -16,46 +17,25 @@ namespace CapaPresentacion {
             }
         }
 
-		private void btnAceptar_Click(object sender, EventArgs e) {
-			if (txtCodigo.Text == "" || txtDescripcion.Text == "" || txtPrecio.Text == "" || txtStock.Text == "" || txtCodSubfamilia.Text == "" || txtCodFamilia.Text == "" || txtIdMarca.Text == "" || txtPesoNeto.Text == "" || txtPesoBruto.Text == "") {
-				MessageBox.Show("¡Te has olvidado de escribir algún dato!", "Error");
-			} else {
+        private void btnAceptar_Click(object sender, EventArgs e) {
+            if (txtCodigo.Text == "" || txtDescripcion.Text == "" || txtPrecio.Text == "" || txtStock.Text == "" || cboFamilia.SelectedText == "" || cboSubFamilia.SelectedText == "" || cboMarca.SelectedText == "" || txtPesoNeto.Text == "" || txtPesoBruto.Text == "") {
+                MessageBox.Show("¡Te has olvidado de escribir algún dato!", "Error");
+            } else {
                 if (!(Int32.TryParse(txtStock.Text, out int stock)))
                 {
                     MessageBox.Show("El stock debe ser un número", "Error");
                 } else {
-                    if (!(Int32.TryParse(txtCodFamilia.Text, out int codF)))
+                    if (!(Int32.TryParse(txtCodigo.Text, out int codigoProducto)))
                     {
-                        MessageBox.Show("El Codigo Familia debe ser un número", "Error");
+                        MessageBox.Show("El codigo de producto debe ser un número", "Error");
                     }
                     else
                     {
-                        if (!(Int32.TryParse(txtCodSubfamilia.Text, out int codSF)))
-                        {
-                            MessageBox.Show("El Codigo de Sub Familia debe ser un número", "Error");
-                        }
-                        else
-                        {
-                            if (!(Int32.TryParse(txtIdMarca.Text, out int marca)))
-                            {
-                                MessageBox.Show("La marca debe ser un número", "Error");
-                            }
-                            else
-                            {
-                                if (!(Int32.TryParse(txtCodigo.Text, out int codigoProducto)))
-                                {
-                                    MessageBox.Show("El codigo de producto debe ser un número", "Error");
-                                }
-                                else
-                                {
-                                    Program.gestor.CreateProduct(new Producto(txtCodigo.Text, txtDescripcion.Text, txtPrecio.Text,stock,codSF,codF,marca,txtPesoNeto.Text,txtPesoBruto.Text));
-                                }
-                            }
-                        }
+                        Program.gestor.CreateProduct(new Producto(txtCodigo.Text, txtDescripcion.Text, txtPrecio.Text, stock, codSF, codF, marca, txtPesoNeto.Text, txtPesoBruto.Text));
                     }
                 }
             }
-		}
+        }
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
@@ -77,6 +57,31 @@ namespace CapaPresentacion {
             //btnAceptar
             btnAceptar.Left = ((this.Width - btnAceptar.Width) / 2) - 100;
             btnAceptar.Top = ((this.Height - btnAceptar.Height) / 2);
+
+            List<Marca> marcas = new List<Marca>();
+            marcas = Program.gestor.BuscarMarcas();
+
+            cboMarca.DisplayMember = "nombre";
+            cboMarca.ValueMember = "idmarca";
+            cboMarca.Items.Clear();
+            cboMarca.Items.AddRange(marcas.ToArray());
+
+            List<Marca> marcas = new List<Marca>();
+            marcas = Program.gestor.BuscarMarcas();
+
+            cboMarca.DisplayMember = "nombre";
+            cboMarca.ValueMember = "idmarca";
+            cboMarca.Items.Clear();
+            cboMarca.Items.AddRange(marcas.ToArray());
+
+            List<Marca> marcas = new List<Marca>();
+            marcas = Program.gestor.BuscarMarcas();
+
+            cboMarca.DisplayMember = "nombre";
+            cboMarca.ValueMember = "idmarca";
+            cboMarca.Items.Clear();
+            cboMarca.Items.AddRange(marcas.ToArray());
+
         }
 
         private void btnMinimizar_Click(object sender, EventArgs e)
@@ -94,6 +99,16 @@ namespace CapaPresentacion {
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void grpCreacion_Enter(object sender, EventArgs e)
         {
 
         }

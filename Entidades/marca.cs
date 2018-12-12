@@ -16,7 +16,6 @@ namespace Entidades
         {
             this.idmarca = idmarca;
             this.nombre = nombre;
-           
         }
 
         public Marca()
