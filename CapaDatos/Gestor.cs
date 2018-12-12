@@ -163,27 +163,29 @@ namespace CapaDatos
                     MySqlDataReader reader = mycomand.ExecuteReader();
                     if (reader.HasRows == true)
                     {
-                        MySqlCommand mycomand = new MySqlCommand("UPDATE producto SET codigo=@codigo descripcion=@descripcion precio=@precio stock=@stock subfamilia_codSF=@subfamilia subfamilia_familia_codFamilia=@familia marca_idmarca=@marca pesoNeto@pesoneto pesoBruto=@pesoBruto WHERE codigo = @code ", connection);
-                        mycomand.Parameters.AddWithValue("@codigo", p.CodigoProducto);
-                        mycomand.Parameters.AddWithValue("@descripcion", p.Descripcion);
-                        mycomand.Parameters.AddWithValue("@precio", p.Precio);
-                        mycomand.Parameters.AddWithValue("@stock", p.Stock);
-                        mycomand.Parameters.AddWithValue("@subfamilia_codSF", p.Subfamilia_codSF);
-                        mycomand.Parameters.AddWithValue("@subfamilia_familia_codFamilia", p.Familia_codFamilia);
-                        mycomand.Parameters.AddWithValue("@marca_idmarca", p.Marca_idmarca);
-                        mycomand.Parameters.AddWithValue("@pesoNeto", p.PesoNeto);
-                        mycomand.Parameters.AddWithValue("@pesoBruto", p.PesoBruto);
-                        mycomand.Parameters.AddWithValue("@code", p.CodigoProducto);
+                        MySqlCommand mycomando = new MySqlCommand("UPDATE producto SET codigo=@codigo descripcion=@descripcion precio=@precio stock=@stock subfamilia_codSF=@subfamilia subfamilia_familia_codFamilia=@familia marca_idmarca=@marca pesoNeto@pesoneto pesoBruto=@pesoBruto WHERE codigo = @code ", connection);
+                        mycomando.Parameters.AddWithValue("@codigo", p.CodigoProducto);
+                        mycomando.Parameters.AddWithValue("@descripcion", p.Descripcion);
+                        mycomando.Parameters.AddWithValue("@precio", p.Precio);
+                        mycomando.Parameters.AddWithValue("@stock", p.Stock);
+                        mycomando.Parameters.AddWithValue("@subfamilia_codSF", p.Subfamilia_codSF);
+                        mycomando.Parameters.AddWithValue("@subfamilia_familia_codFamilia", p.Familia_codFamilia);
+                        mycomando.Parameters.AddWithValue("@marca_idmarca", p.Marca_idmarca);
+                        mycomando.Parameters.AddWithValue("@pesoNeto", p.PesoNeto);
+                        mycomando.Parameters.AddWithValue("@pesoBruto", p.PesoBruto);
+                        mycomando.Parameters.AddWithValue("@code", p.CodigoProducto);
+                        mycomando.ExecuteNonQuery();
+                        return "updated";
 
-                        MySqlDataReader reader2 = mycomand.ExecuteReader();
-                        if (reader2.HasRows())
-                        {
-                            return "Updateado";
-                        }
+                        //MySqlDataReader reader2 = mycomand2.ExecuteReader();
+                        //if (reader2.HasRows())
+                        //{
+                        //    return "Updateado";
+                        //}
 
 
                     }
-                    return "No se ha encontrado el producto."
+                    return "No se ha encontrado el producto.";
             }
 
 
@@ -220,19 +222,16 @@ namespace CapaDatos
 
                         try
                         {
-                            using (MySqlConnection connection = new MySqlConnection())
+                            using (MySqlConnection connection2 = new MySqlConnection())
                             {
-                                connection.ConnectionString = STRINGCONECT;
-                                connection.Open();
+                                connection2.ConnectionString = STRINGCONECT;
+                                connection2.Open();
 
 
-                                MySqlCommand mycomand = new MySqlCommand("delete from producto where codigo=@codigo", connection);
-                                mycomand.Parameters.AddWithValue("@codigo", p.CodigoProducto);
-                                MySqlDataReader reader2 = mycomand.ExecuteReader();
-                                if (reader2.HasRows())
-                                {
-                                    return "Deleted";
-                                }
+                                MySqlCommand mycomando = new MySqlCommand("delete from producto where codigo=@codigo", connection);
+                                mycomando.Parameters.AddWithValue("@codigo", p.CodigoProducto);
+                                MySqlDataReader reader2 = mycomando.ExecuteReader();
+                                return "deleted";
                             }
                         }
                         catch (Exception e)
