@@ -16,7 +16,7 @@ namespace CapaPresentacion {
                 DialogResult result = MessageBox.Show("De verdad, ¿Quieres borrar este producto?", "Borrar el producto Selecionado", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    Producto productoAux = new Producto(txtCodigo.Text, txtEAN.Text, txtDescripcion.Text, txtMarca.Text, txtPrecio.Text, valoresInt[0], valoresInt[1], valoresInt[2], valoresInt[3], valoresInt[4], valoresInt[5]);
+                    //Producto productoAux = new Producto(txtCodigo.Text, txtEAN.Text, txtDescripcion.Text, txtMarca.Text, txtPrecio.Text, valoresInt[0], valoresInt[1], valoresInt[2], valoresInt[3], valoresInt[4], valoresInt[5]);
                     //Faltar llamar a la clase gestor de datos.
                 }
             }

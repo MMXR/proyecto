@@ -14,7 +14,7 @@ namespace CapaPresentacion {
 			} else {
 				
 				int[] valoresInt = { int.Parse(txtStock.Text), int.Parse(txtCodSubfamilia.Text), int.Parse(txtCodFamilia.Text), int.Parse(txtIdMarca.Text), int.Parse(txtPesoNeto.Text), int.Parse(txtPesoBruto.Text) };
-				Producto productoAux = new Producto(txtCodigo.Text, txtEAN.Text, txtDescripcion.Text, txtMarca.Text, txtPrecio.Text, valoresInt[0], valoresInt[1], valoresInt[2], valoresInt[3], valoresInt[4], valoresInt[5]);
+				//Producto productoAux = new Producto(txtCodigo.Text, txtEAN.Text, txtDescripcion.Text, txtMarca.Text, txtPrecio.Text, valoresInt[0], valoresInt[1], valoresInt[2], valoresInt[3], valoresInt[4], valoresInt[5]);
 				//Faltar llamar a la clase gestor de datos.
 			}
 		}

@@ -17,13 +17,44 @@ namespace CapaPresentacion {
         }
 
 		private void btnAceptar_Click(object sender, EventArgs e) {
-			if (txtCodigo.Text == "" || txtEAN.Text == "" || txtDescripcion.Text == "" || txtMarca.Text == "" || txtPrecio.Text == "" || txtStock.Text == "" || txtCodSubfamilia.Text == "" || txtCodFamilia.Text == "" || txtIdMarca.Text == "" || txtPesoNeto.Text == "" || txtPesoBruto.Text == "") {
+			if (txtCodigo.Text == "" || txtDescripcion.Text == "" || txtPrecio.Text == "" || txtStock.Text == "" || txtCodSubfamilia.Text == "" || txtCodFamilia.Text == "" || txtIdMarca.Text == "" || txtPesoNeto.Text == "" || txtPesoBruto.Text == "") {
 				MessageBox.Show("¡Te has olvidado de escribir algún dato!", "Error");
 			} else {
-				int[] valoresInt = { int.Parse(txtStock.Text), int.Parse(txtCodSubfamilia.Text), int.Parse(txtCodFamilia.Text), int.Parse(txtIdMarca.Text), int.Parse(txtPesoNeto.Text), int.Parse(txtPesoBruto.Text) };
-				Producto productoAux = new Producto(txtCodigo.Text, txtEAN.Text, txtDescripcion.Text, txtMarca.Text, txtPrecio.Text, valoresInt[0], valoresInt[1], valoresInt[2], valoresInt[3], valoresInt[4], valoresInt[5]);
-				//Faltar llamar a la clase gestor de datos.
-			}
+                if (!(Int32.TryParse(txtStock.Text, out int stock)))
+                {
+                    MessageBox.Show("El stock debe ser un número", "Error");
+                } else {
+                    if (!(Int32.TryParse(txtCodFamilia.Text, out int codF)))
+                    {
+                        MessageBox.Show("El Codigo Familia debe ser un número", "Error");
+                    }
+                    else
+                    {
+                        if (!(Int32.TryParse(txtCodSubfamilia.Text, out int codSF)))
+                        {
+                            MessageBox.Show("El Codigo de Sub Familia debe ser un número", "Error");
+                        }
+                        else
+                        {
+                            if (!(Int32.TryParse(txtIdMarca.Text, out int marca)))
+                            {
+                                MessageBox.Show("La marca debe ser un número", "Error");
+                            }
+                            else
+                            {
+                                if (!(Int32.TryParse(txtCodigo.Text, out int codigoProducto)))
+                                {
+                                    MessageBox.Show("El codigo de producto debe ser un número", "Error");
+                                }
+                                else
+                                {
+                                    Program.gestor.CreateProduct(new Producto(txtCodigo.Text, txtDescripcion.Text, txtPrecio.Text,stock,codSF,codF,marca,txtPesoNeto.Text,txtPesoBruto.Text));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 		}
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)
@@ -60,6 +91,11 @@ namespace CapaPresentacion {
             {
                 System.Windows.Forms.Application.Exit();
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

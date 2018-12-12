@@ -168,6 +168,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CapaDatos\CapaDatos.csproj">
+      <Project>{d6740cf6-4b5a-48f3-a8e5-b183d253a380}</Project>
+      <Name>CapaDatos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Entidades\Entidades.csproj">
       <Project>{5638A253-1915-4425-9C4B-44C3DC3CD06E}</Project>
       <Name>Entidades</Name>
