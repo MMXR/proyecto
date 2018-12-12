@@ -1,19 +1,16 @@
 ﻿using Entidades;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Entidades;
-using MySql.Data.MySqlClient;
+
 namespace CapaDatos
 {
     public class Gestor
     {
-        static String STRINGCONECT = "SERVER=localhost;DATABASE=almacenmmxr;UID=root;PASSWORD=" + "" + ";";
+        static String STRINGCONECT = "SERVER=localhost;DATABASE=agenda;UID=root;PASSWORD=" + "" + ";";
         //CRUD Producto
         //<<<<<<< HEAD
-        public void createProduct() { }
         public String CreateProduct(Producto producto)
         // e2eac3eaeac66331b85a2737449565a46c324f64
         {
@@ -30,7 +27,7 @@ namespace CapaDatos
                 connection.Open();
 
                 MySqlCommand mycomand = new MySqlCommand("select * from producto where codigo=@codigo", connection);
-                mycomand.Parameters.AddWithValue("@nombre", producto.CodigoProducto);
+                mycomand.Parameters.AddWithValue("@codigo", producto.CodigoProducto);
                 MySqlDataReader reader = mycomand.ExecuteReader();
                 if (reader.HasRows == true)
                 {
@@ -39,7 +36,7 @@ namespace CapaDatos
                 reader.Close();
 
                 cmd.CommandText = "INSERT INTO producto (codigo,descripcion,precio,stock,subfamilia_codSF,subfamilia_familia_codFamilia,marca_idmarca,pesoNeto,pesoBruto) value (@codigo, @descripcion, @precio, @stock, @codFamilia, @codSubFamilia, @marca, @pesoNeto, @pesoBruto)";
-                cmd.Parameters.AddWithValue("@codigo", producto.CodigoProducto);
+                cmd.Parameters.AddWithValue("@codigo", producto.CodigoCompleto);
                 cmd.Parameters.AddWithValue("@descripcion", producto.Descripcion);
                 cmd.Parameters.AddWithValue("@codFamilia", producto.Familia_codFamilia);
                 cmd.Parameters.AddWithValue("@codSubFamilia", producto.Subfamilia_codSF);
@@ -177,7 +174,7 @@ namespace CapaDatos
                         Producto p = lista.ElementAt(i);
 
                         MySqlCommand mycomand = new MySqlCommand("select * from producto_has_estante where producto_codigo=@codigo", connection);
-                        mycomand.Parameters.AddWithValue("@codigo", p.CodigoProducto);
+                        mycomand.Parameters.AddWithValue("@codigo", p.CodigoCompleto);
                         MySqlDataReader reader = mycomand.ExecuteReader();
                         if (reader.HasRows == true)
                         {
@@ -218,30 +215,21 @@ namespace CapaDatos
 
 
                     MySqlCommand mycomand = new MySqlCommand("select * from producto where codigo=@codigo", connection);
-                    mycomand.Parameters.AddWithValue("@codigo", p.CodigoProducto);
+                    mycomand.Parameters.AddWithValue("@codigo", p.CodigoCompleto);
                     MySqlDataReader reader = mycomand.ExecuteReader();
                     if (reader.HasRows == true)
                     {
-                        MySqlCommand mycomando = new MySqlCommand("UPDATE producto SET codigo=@codigo descripcion=@descripcion precio=@precio stock=@stock subfamilia_codSF=@subfamilia subfamilia_familia_codFamilia=@familia marca_idmarca=@marca pesoNeto@pesoneto pesoBruto=@pesoBruto WHERE codigo = @code ", connection);
-                        mycomando.Parameters.AddWithValue("@codigo", p.CodigoProducto);
-                        mycomando.Parameters.AddWithValue("@descripcion", p.Descripcion);
-                        mycomando.Parameters.AddWithValue("@precio", p.Precio);
-                        mycomando.Parameters.AddWithValue("@stock", p.Stock);
-                        mycomando.Parameters.AddWithValue("@subfamilia_codSF", p.Subfamilia_codSF);
-                        mycomando.Parameters.AddWithValue("@subfamilia_familia_codFamilia", p.Familia_codFamilia);
-                        mycomando.Parameters.AddWithValue("@marca_idmarca", p.Marca_idmarca);
-                        mycomando.Parameters.AddWithValue("@pesoNeto", p.PesoNeto);
-                        mycomando.Parameters.AddWithValue("@pesoBruto", p.PesoBruto);
-                        mycomando.Parameters.AddWithValue("@code", p.CodigoProducto);
-                        mycomando.ExecuteNonQuery();
-                        return "updated";
-
-                        //MySqlDataReader reader2 = mycomand2.ExecuteReader();
-                        //if (reader2.HasRows())
-                        //{
-                        //    return "Updateado";
-                        //}
-
+                        MySqlCommand mycomand2 = new MySqlCommand("UPDATE producto SET codigo=@codigo descripcion=@descripcion precio=@precio stock=@stock subfamilia_codSF=@subfamilia subfamilia_familia_codFamilia=@familia marca_idmarca=@marca pesoNeto@pesoneto pesoBruto=@pesoBruto WHERE codigo = @code ", connection);
+                        mycomand2.Parameters.AddWithValue("@codigo", p.CodigoProducto);
+                        mycomand2.Parameters.AddWithValue("@descripcion", p.Descripcion);
+                        mycomand2.Parameters.AddWithValue("@precio", p.Precio);
+                        mycomand2.Parameters.AddWithValue("@stock", p.Stock);
+                        mycomand2.Parameters.AddWithValue("@subfamilia_codSF", p.Subfamilia_codSF);
+                        mycomand2.Parameters.AddWithValue("@subfamilia_familia_codFamilia", p.Familia_codFamilia);
+                        mycomand2.Parameters.AddWithValue("@marca_idmarca", p.Marca_idmarca);
+                        mycomand2.Parameters.AddWithValue("@pesoNeto", p.PesoNeto);
+                        mycomand2.Parameters.AddWithValue("@pesoBruto", p.PesoBruto);
+                        mycomand2.Parameters.AddWithValue("@code", p.CodigoProducto);
 
                     }
                     return "No se ha encontrado el producto.";

@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-    class Marca : IEquatable<Marca>
+    public class Marca : IEquatable<Marca>
     {
         public int idmarca { get; set; }
         public String nombre { get; set; }
         public List<Producto> listaProductos { get; set; }
 
-        public Marca(int idmarca, string nombre, List<Producto> listaProductos)
+        public Marca(int idmarca, string nombre)
         {
             this.idmarca = idmarca;
             this.nombre = nombre;
-            this.listaProductos = listaProductos;
         }
 
         public Marca()

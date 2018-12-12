@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-    class SubFamilia : IEquatable<SubFamilia>
+    public class SubFamilia : IEquatable<SubFamilia>
     {
         public int codSF { get; set; }
         public String idCaracter { get; set; }

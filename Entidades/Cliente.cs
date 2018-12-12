@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-    class Cliente : IEquatable<Cliente>
+    public class Cliente : IEquatable<Cliente>
     {
 
         public String nif { get; set; }
