@@ -311,7 +311,7 @@ namespace CapaDatos
         }
 
 
-        public List<SubFamilia> BuscarSubFamilias()
+        public List<SubFamilia> BuscarSubFamilias(int codFamilia)
         {
             List<SubFamilia> subfamilias = new List<SubFamilia>();
             try
@@ -320,7 +320,7 @@ namespace CapaDatos
                 {
                     connection.ConnectionString = STRINGCONECT;
                     connection.Open();
-                    MySqlCommand mycomand = new MySqlCommand("select * from subfamilia ", connection);
+                    MySqlCommand mycomand = new MySqlCommand("select * from subfamilia where familia_codFamilia=@code", connection);
                     MySqlDataReader reader = mycomand.ExecuteReader();
                     if (reader.HasRows)
                     {
@@ -346,5 +346,11 @@ namespace CapaDatos
             return null;
         }
 
+
+
+        
     }
+
+
+
 }
