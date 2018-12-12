@@ -71,7 +71,10 @@ namespace CapaPresentacion {
             cboMarca.DisplayMember = "nombre";
             cboMarca.ValueMember = "idmarca";
             cboMarca.Items.Clear();
-            cboMarca.Items.AddRange(marcas.ToArray());
+            if (marcas != null)
+            {
+                cboMarca.Items.AddRange(marcas.ToArray());
+            }
 
             List<Familia> familias = new List<Familia>();
             familias = Program.gestor.BuscarFamilias();
@@ -79,8 +82,10 @@ namespace CapaPresentacion {
             cboFamilia.DisplayMember = "idString";
             cboFamilia.ValueMember = "codFamilia";
             cboFamilia.Items.Clear();
-            cboFamilia.Items.AddRange(familias.ToArray());
-
+            if (marcas != null)
+            {
+                cboFamilia.Items.AddRange(familias.ToArray());
+            }
 
         }
 
@@ -124,7 +129,10 @@ namespace CapaPresentacion {
             cboSubFamilia.DisplayMember = "idCaracter";
             cboSubFamilia.ValueMember = "codSF";
             cboSubFamilia.Items.Clear();
-            cboSubFamilia.Items.AddRange(subfamilias.ToArray());
+            if (subfamilias != null)
+            {
+                cboSubFamilia.Items.AddRange(subfamilias.ToArray());
+            }
         }
     }
 }

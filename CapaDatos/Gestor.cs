@@ -321,6 +321,7 @@ namespace CapaDatos
                     connection.ConnectionString = STRINGCONECT;
                     connection.Open();
                     MySqlCommand mycomand = new MySqlCommand("select * from subfamilia where familia_codFamilia=@code", connection);
+                    mycomand.Parameters.AddWithValue("@code", codFamilia);
                     MySqlDataReader reader = mycomand.ExecuteReader();
                     if (reader.HasRows)
                     {
