@@ -160,17 +160,17 @@ namespace CapaDatos
                     MySqlDataReader reader = mycomand.ExecuteReader();
                     if (reader.HasRows == true)
                     {
-                        MySqlCommand mycomand = new MySqlCommand("UPDATE producto SET codigo=@codigo descripcion=@descripcion precio=@precio stock=@stock subfamilia_codSF=@subfamilia subfamilia_familia_codFamilia=@familia marca_idmarca=@marca pesoNeto@pesoneto pesoBruto=@pesoBruto WHERE codigo = @code ", connection);
-                        mycomand.Parameters.AddWithValue("@codigo", p.CodigoProducto);
-                        mycomand.Parameters.AddWithValue("@descripcion", p.Descripcion);
-                        mycomand.Parameters.AddWithValue("@precio", p.Precio);
-                        mycomand.Parameters.AddWithValue("@stock", p.Stock);
-                        mycomand.Parameters.AddWithValue("@subfamilia_codSF", p.Subfamilia_codSF);
-                        mycomand.Parameters.AddWithValue("@subfamilia_familia_codFamilia", p.Familia_codFamilia);
-                        mycomand.Parameters.AddWithValue("@marca_idmarca", p.Marca_idmarca);
-                        mycomand.Parameters.AddWithValue("@pesoNeto", p.PesoNeto);
-                        mycomand.Parameters.AddWithValue("@pesoBruto", p.PesoBruto);
-                        mycomand.Parameters.AddWithValue("@code", p.CodigoProducto);
+                        MySqlCommand mycomand2 = new MySqlCommand("UPDATE producto SET codigo=@codigo descripcion=@descripcion precio=@precio stock=@stock subfamilia_codSF=@subfamilia subfamilia_familia_codFamilia=@familia marca_idmarca=@marca pesoNeto@pesoneto pesoBruto=@pesoBruto WHERE codigo = @code ", connection);
+                        mycomand2.Parameters.AddWithValue("@codigo", p.CodigoProducto);
+                        mycomand2.Parameters.AddWithValue("@descripcion", p.Descripcion);
+                        mycomand2.Parameters.AddWithValue("@precio", p.Precio);
+                        mycomand2.Parameters.AddWithValue("@stock", p.Stock);
+                        mycomand2.Parameters.AddWithValue("@subfamilia_codSF", p.Subfamilia_codSF);
+                        mycomand2.Parameters.AddWithValue("@subfamilia_familia_codFamilia", p.Familia_codFamilia);
+                        mycomand2.Parameters.AddWithValue("@marca_idmarca", p.Marca_idmarca);
+                        mycomand2.Parameters.AddWithValue("@pesoNeto", p.PesoNeto);
+                        mycomand2.Parameters.AddWithValue("@pesoBruto", p.PesoBruto);
+                        mycomand2.Parameters.AddWithValue("@code", p.CodigoProducto);
 
                     }
                     return "No se ha encontrado el producto.";
@@ -309,7 +309,7 @@ namespace CapaDatos
         }
 
 
-        public List<SubFamilia> BuscarSubFamilias()
+        public List<SubFamilia> BuscarSubFamilias(int codFamilia)
         {
             List<SubFamilia> subfamilias = new List<SubFamilia>();
             try
@@ -318,7 +318,7 @@ namespace CapaDatos
                 {
                     connection.ConnectionString = STRINGCONECT;
                     connection.Open();
-                    MySqlCommand mycomand = new MySqlCommand("select * from subfamilia ", connection);
+                    MySqlCommand mycomand = new MySqlCommand("select * from subfamilia where familia_codFamilia=@code", connection);
                     MySqlDataReader reader = mycomand.ExecuteReader();
                     if (reader.HasRows)
                     {
@@ -344,5 +344,11 @@ namespace CapaDatos
             return null;
         }
 
+
+
+        
     }
+
+
+
 }
