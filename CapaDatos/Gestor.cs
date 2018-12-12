@@ -305,6 +305,7 @@ namespace CapaDatos
             }
             return nombreEmpresa;
         }
+
         public int SelectIDMarca(String nombre)
         {
             int id = 0;
@@ -356,5 +357,111 @@ namespace CapaDatos
             }
             return cantidad;
         }
+        public List<Marca> BuscarMarcas()
+        {
+            List<Marca> marcas = new List<Marca>();
+            try
+            {
+                //Conexion a la base de datos
+                MySqlConnection connection = new MySqlConnection(STRINGCONECT);
+                MySqlCommand cmd = connection.CreateCommand();
+                connection.Open();
+
+                MySqlCommand mycomand = new MySqlCommand("select * from marca ", connection);
+                MySqlDataReader reader = mycomand.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        string name = reader["nombre"].ToString();
+                        int id = reader.GetInt32(0);
+                        Marca marca = new Marca(id, name);
+                        marcas.Add(marca);
+                        //var kk = (DateTime)reader["fecha"];
+                        //var kdfjakd = (int)reader.GetInt32(0);        
+                    }
+                    reader.Close();
+                    connection.Close();
+                    return marcas;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            return null;
+        }
+
+
+        public List<Familia> BuscarFamilias()
+        {
+            List<Familia> familias = new List<Familia>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection())
+                {
+                    connection.ConnectionString = STRINGCONECT;
+                    connection.Open();
+                    MySqlCommand mycomand = new MySqlCommand("select * from familia ", connection);
+                    MySqlDataReader reader = mycomand.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string name = reader["idString"].ToString();
+                            string description = reader["descripcion"].ToString();
+                            int id = reader.GetInt32(0);
+                            Familia familia = new Familia(id, name, description);
+                            familias.Add(familia);
+                            //var kk = (DateTime)reader["fecha"];
+                            //var kdfjakd = (int)reader.GetInt32(0);        
+                        }
+                        return familias;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            return null;
+        }
+
+
+        public List<SubFamilia> BuscarSubFamilias(int codFamilia)
+        {
+            List<SubFamilia> subfamilias = new List<SubFamilia>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection())
+                {
+                    connection.ConnectionString = STRINGCONECT;
+                    connection.Open();
+                    MySqlCommand mycomand = new MySqlCommand("select * from subfamilia where familia_codFamilia=@code", connection);
+                    MySqlDataReader reader = mycomand.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string name = reader["idCaracter"].ToString();
+                            string description = reader["descripcion"].ToString();
+                            int id = reader.GetInt32(0);
+                            int idFamilia = reader.GetInt32(3);
+                            SubFamilia subfamilia = new SubFamilia(id, name, description, idFamilia);
+                            subfamilias.Add(subfamilia);
+                            //var kk = (DateTime)reader["fecha"];
+                            //var kdfjakd = (int)reader.GetInt32(0);        
+                        }
+                        return subfamilias;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            return null;
+        }
+
     }
 }
